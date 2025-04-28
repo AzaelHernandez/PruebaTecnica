@@ -1,8 +1,18 @@
 # Proyecto MERN - Gestión de Usuarios (Backend)
 
-Este proyecto es una aplicación MERN (MongoDB, Express, React, Node.js) centrada en la **gestión de usuarios**. Esta parte corresponde exclusivamente al **backend**, que incluye autenticación con JWT, gestión CRUD de usuarios, validaciones, paginación, filtros y seed de usuarios.
+Este proyecto es una aplicación MERN (MongoDB, Express, React, Node.js) centrada en la **gestión de usuarios**. Esta parte corresponde exclusivamente al **backend**, que incluye:
+- Autenticación con JWT
+- Gestión CRUD de usuarios
+- Validaciones
+- Paginación
+- Filtros
+- Seed de usuarios
 
+Este repositorio implementa el backend de la aplicación, mientras que el frontend en React está en otro repositorio.
 
+## Estructura del Proyecto
+
+La estructura de directorios está organizada de la siguiente manera:
 
 ## Estructura del proyecto
 
@@ -18,6 +28,7 @@ src/
 ├── middlewares/
 │   └── auth.middleware.js
 │   └── handleValidation.middleware.js
+│   └── validateLogin.middleware.js
 │   └── validateUser.middleware.js
 ├── models/
 │   └── user.models.js
@@ -31,6 +42,7 @@ src/
 ├── package-lock.json
 ├── package.json
 ├── README.md
+
 ```
 
 ## Cómo Ejecutar el Proyecto
@@ -39,7 +51,7 @@ src/
 
 ```bash
 git clone https://github.com/usuario/mi-repo.git
-cd backend
+cd src
 ```
 
 2. Instala las dependencias:
@@ -56,6 +68,7 @@ JWT_SECRET=secretito
 ```
 
 4. Ejecuta el servidor en modo desarrollo:
+Esto ejecutará el servidor utilizando nodemon para recargar automáticamente los cambios en el código.
 
 ```bash
 npm run dev
@@ -65,10 +78,12 @@ npm run dev
 
 - Node.js (v18 o superior)
 - MongoDB (local o Atlas)
+- (importante) Ejecutar mongod desde la consola CMD
 - Git (opcional)
 - Postman o similar para probar la API
 - (Opcional) nodemon para recargar automáticamente el servidor
 - Instalar dependencias (npm init -y, npm install express mongoose bcryptjs jsonwebtoken dotenv cors morgan, npm install --save-dev nodemon)
+
 
 
 ## Tecnologías y Librerías
@@ -81,9 +96,22 @@ npm run dev
 - **Morgan**: Logger de peticiones HTTP
 - **Cors**: Manejo de orígenes cruzados
 
+
+## Endpoints de la API
+
+- **POST /api/auth/login**: Iniciar sesión con credenciales (correo y contraseña)
+- **GET /api/users**: Obtener todos los usuarios (con filtros, paginación y búsqueda)
+- **GET /api/users/:id**:  Obtener un usuario por ID
+- **POST /api/users**: Crear un nuevo usuario
+- **PUT /api/users/:id**: Actualizar un usuario por ID
+- **DELETE /api/users/:id**: Eliminar un usuario por ID
+
 ## Desafíos y Decisiones
 
-- Se decidió usar MongoDB por su flexibilidad con estructuras anidadas (como `address`).
-- Se implementaron middlewares para centralizar validaciones y manejo de errores.
+- MongoDB: Se eligió MongoDB por su flexibilidad y facilidad para trabajar con datos anidados, lo que es útil para estructuras complejas como direcciones de usuarios.
 
+- Autenticación: Se implementó autenticación JWT para manejar de manera segura las sesiones de usuario. Los tokens se incluyen en los encabezados de las peticiones y se verifican en los middlewares de las rutas protegidas.
 
+- Validaciones: Se implementaron middlewares para centralizar la validación de datos en las rutas, asegurando que los datos ingresados sean correctos antes de que lleguen a la base de datos.
+
+- Paginación y Filtros: Para mejorar el rendimiento y la experiencia del usuario, se implementó paginación y filtros en las rutas de obtención de usuarios.
